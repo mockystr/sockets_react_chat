@@ -1,0 +1,35 @@
+form {
+
+}
+
+.username-block {
+    margin-top: 20vh;
+    text-align: center;
+}
+
+.username-block input[type=text] {
+    padding-left: 10px;
+    font-size: 30px;
+    font-weight: 100;
+}
+
+.input-field input[type=text]:focus + label {
+    color: #000;
+}
+
+.input-field input[type=text]:focus {
+    border-bottom: 5px solid #000;
+    box-shadow: 0 1px 0 0 #000;
+}
+
+/* valid color */
+.input-field input[type=text].valid {
+    border-bottom: 1px solid rgb(89, 0, 255);
+    box-shadow: 0 1px 0 0 rgb(89, 0, 255);
+}
+
+/* invalid color */
+.input-field input[type=text].invalid {
+    border-bottom: 1px solid blue;
+    box-shadow: 0 1px 0 0 blue;
+}

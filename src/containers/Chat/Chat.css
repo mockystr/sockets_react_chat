@@ -1,0 +1,12 @@
+* {
+    /* font-size: 25px */
+}
+
+.chat-block {
+    overflow: auto;
+    height: 85vh;
+}
+
+.input-block {
+    height: 15vh;
+}
