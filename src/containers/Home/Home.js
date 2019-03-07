@@ -27,7 +27,7 @@ class Home extends React.Component {
             console.log(event.target.value)
             const { setUsername } = this.props;
 
-            this.setState({ inputUsernameValue: event.target.value})
+            this.setState({ inputUsernameValue: event.target.value })
             setUsername(event.target.value, this.props.history);
         }
     }
@@ -35,33 +35,29 @@ class Home extends React.Component {
     render() {
         const { item } = this.state;
         const { user: { isLoading } } = this.props;
-        console.log(isLoading)
+
         return (
-                <div>
-                    <div className='row'>
-                        <div className='username-block'>
-                            <h2>{item}</h2>
-                            <div className="input-field col s6 offset-s3">
-                                <input placeholder="type here..." id="first_name" type="text" className="validate"
-                                    onKeyPress={this.handleInputOnKeyPressed} />
-                            </div>
+            <div>
+                <div className='row'>
+                    <div className='username-block'>
+                        <h2>{item}</h2>
+                        <div className="input-field col s6 offset-s3">
+                            <input placeholder="type here..." id="first_name" type="text" className="validate"
+                                onKeyPress={this.handleInputOnKeyPressed} />
                         </div>
                     </div>
-                    <div className='row'>
+                </div>
+                <div className='row'>
+                    <div className='col s6 offset-s3' style={{'textAlign': 'center'}}>
                         {isLoading ? <Loader
                             type="Puff"
                             color="#00BFFF"
                             height="50"
                             width="50"
-                        /> : <div>not loading</div>}
-                        {/* <Loader
-                            type="Puff"
-                            color="#00BFFF"
-                            height="50"
-                            width="50"
-                        /> */}
+                        /> : null}
                     </div>
                 </div>
+            </div>
         )
     }
 }

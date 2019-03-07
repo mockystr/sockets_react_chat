@@ -7,13 +7,16 @@ export const setUsername = (username, history) => async (dispatch) => {
         dispatch({
             type: SET_USERNAME_REQUEST,
         })
-        
-        dispatch({
-            type: SET_USERNAME_SUCCESS,
-            payload: { username }
-        })
 
-        history.push('/chat');
+        setTimeout(() => {
+            console.log('sleep');
+            dispatch({
+                type: SET_USERNAME_SUCCESS,
+                payload: { username }
+            });
+            
+            history.push('/chat');
+        }, 1000);
     } catch (err) {
         console.log(err);
 

@@ -3,8 +3,12 @@
 }
 
 .chat-block {
+    margin: 5vh 0;
+    height: 90vh;
+}
+
+.message-block {
     overflow: auto;
-    height: 85vh;
 }
 
 .input-block {
