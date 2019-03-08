@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 import 'containers/Chat/Chat.css';
 import { initSocket } from 'socket';
 import { sendMessage, addMessage } from 'actions/chatActions';
@@ -16,12 +16,11 @@ class Chat extends React.Component {
 
             sendMessage(event.target.value);
 
-            const { addMessage } = this.props;
-            // addMessage(event.target.value);
-
+            const { addMessage, user } = this.props;
             addMessage({
                 type: 'sendMessage',
                 payload: {
+                    userName: user.username,
                     socketId: 'BNxrjnF4VtUl3f2rAAAD',
                     message: event.target.value
                 }
@@ -31,16 +30,25 @@ class Chat extends React.Component {
     }
 
     render() {
+        const { user } = this.props;
+
+        if (user.username.length === 0) {
+            return <Redirect to='/' />
+        }
+
         const { chat } = this.props;
 
         return (
             <div className='container'>
                 <div id='chat-block-id' className='chat-block'>
-                    <div>
+                    <div className='message-block'>
                         {chat.messages.map(el => {
                             return (
-                                <div key={el.payload.socketId}>
-                                    {el.payload.username ? el.payload.username : "undefined"}
+                                <div key={Math.random() * 1000
+                                    // el.payload.socketId
+                                    // Date.now()*2
+                                }>
+                                    {el.payload.userName ? el.payload.userName : "undefined"}
                                     : {el.payload.message}
                                 </div>
                             )
@@ -57,7 +65,8 @@ class Chat extends React.Component {
 
 const mapStateToProps = store => {
     return {
-        chat: store.chat
+        chat: store.chat,
+        user: store.user
     }
 }
 

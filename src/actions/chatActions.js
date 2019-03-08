@@ -7,7 +7,6 @@ export const NEW_MESSAGE_FAIL = 'NEW_MESSAGE_FAIL';
 
 export const addMessageDirectly = (message_obj) => {
     try {
-        // console.log('addMessage fired');
         store.dispatch({
             type: NEW_MESSAGE_REQUEST,
         })

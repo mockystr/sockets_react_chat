@@ -6,10 +6,10 @@ import {
 
 const initialState = {
     messages: [
-        {
-            payload: { socketId: "BNxrjnF4VtUl3f2rAAAD", message: "fuck" },
-            type: "sendMessage"
-        },
+        // {
+        //     payload: { socketId: "BNxrjnF4VtUl3f2rAAAD", message: "fuck" },
+        //     type: "sendMessage"
+        // },
     ],
     error: '',
     isLoading: false,
@@ -18,11 +18,9 @@ const initialState = {
 const chatReducer = (state = initialState, action) => {
     switch (action.type) {
         case NEW_MESSAGE_REQUEST:
-            console.log(NEW_MESSAGE_REQUEST);
             return { ...state, isLoading: true, error: '' }
 
         case NEW_MESSAGE_SUCCESS:
-            console.log(NEW_MESSAGE_SUCCESS);
             console.log("from reducer ", action.payload);
             return {
                 ...state, isLoading: false,
@@ -30,7 +28,6 @@ const chatReducer = (state = initialState, action) => {
             }
 
         case NEW_MESSAGE_FAIL:
-            console.log(NEW_MESSAGE_FAIL);
             return { ...state, isLoading: false, error: action.payload.message }
 
         default:

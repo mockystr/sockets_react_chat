@@ -16,7 +16,7 @@ import {
         return { ...state, isLoading: true, error: '' }
   
       case SET_USERNAME_SUCCESS:
-        return { ...state, isLoading: false, username: action.payload }
+        return { ...state, isLoading: false, username: action.payload.username }
   
       case SET_USERNAME_FAIL:
         return { ...state, isLoading: false, error: action.payload.message }

@@ -23,7 +23,7 @@ class Home extends React.Component {
     }
 
     handleInputOnKeyPressed = (event) => {
-        if (event.key === 'Enter' && event.target.value.length >= 2) {
+        if (event.key === 'Enter' && event.target.value.length >= 1) {
             console.log(event.target.value)
             const { setUsername } = this.props;
 
@@ -37,26 +37,28 @@ class Home extends React.Component {
         const { user: { isLoading } } = this.props;
 
         return (
-            <div>
+            <div className='container'>
                 <div className='row'>
                     <div className='username-block'>
                         <h2>{item}</h2>
-                        <div className="input-field col s6 offset-s3">
-                            <input placeholder="type here..." id="first_name" type="text" className="validate"
+                        <div className="input-field col s12 l8 m8 offset-l2 offset-m2">
+                            <input placeholder="username..." id="first_name" type="text" className="validate"
                                 onKeyPress={this.handleInputOnKeyPressed} />
                         </div>
                     </div>
                 </div>
-                <div className='row'>
-                    <div className='col s6 offset-s3' style={{'textAlign': 'center'}}>
-                        {isLoading ? <Loader
-                            type="Puff"
-                            color="#00BFFF"
-                            height="50"
-                            width="50"
-                        /> : null}
+                {isLoading ?
+                    <div className='row'>
+                        <div className='col s12 l-6 m-9' style={{ 'textAlign': 'center' }}>
+                            <Loader
+                                type="Puff"
+                                color="green"
+                                height="50"
+                                width="50"
+                            />
+                        </div>
                     </div>
-                </div>
+                    : <div></div>}
             </div>
         )
     }

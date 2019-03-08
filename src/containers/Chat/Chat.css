@@ -4,10 +4,10 @@
 
 .chat-block {
     margin: 5vh 0;
-    height: 90vh;
 }
 
 .message-block {
+    height: 85vh;
     overflow: auto;
 }
 
