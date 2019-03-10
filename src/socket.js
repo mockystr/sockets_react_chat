@@ -1,15 +1,9 @@
-import io from 'socket.io-client';
 import { addMessageDirectly } from 'actions/chatActions';
 
-export const socket = io('http://185.87.51.125:3001', {
-    path: '/ws',
-    // transports: ['websocket', 'polling'],
-});
-
-
-export const initSocket = () => {
+export const initSocket = (socket) => {
     socket.on('message', (data) => {
         console.log(data);
+        console.log(socket);
 
         addMessageDirectly(data);
     });

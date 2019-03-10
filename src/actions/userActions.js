@@ -1,32 +1,19 @@
-import {socket} from 'socket'
-
 export const SET_USERNAME_REQUEST = 'SET_USERNAME_REQUEST'
 export const SET_USERNAME_SUCCESS = 'SET_USERNAME_SUCCESS'
 export const SET_USERNAME_FAIL = 'SET_USERNAME_FAIL'
 
-export const setUsername = (username, history) => async (dispatch) => {
+export const addUsername = (username, history) => async (dispatch) => {
     try {
         dispatch({
             type: SET_USERNAME_REQUEST,
         })
 
-        setTimeout(() => {
-            console.log('set username');
-            socket.emit('message', 
-            {
-                type: 'setUsername',
-                payload: {
-                    userName: username
-                }
-            })
+        dispatch({
+            type: SET_USERNAME_SUCCESS,
+            payload: { username }
+        });
 
-            dispatch({
-                type: SET_USERNAME_SUCCESS,
-                payload: { username }
-            });
-            
-            history.push('/chat');
-        }, 1000);
+        history.push('/chat');
     } catch (err) {
         console.log(err);
 
@@ -35,4 +22,14 @@ export const setUsername = (username, history) => async (dispatch) => {
             payload: { error: err }
         })
     }
+}
+
+export const setUsername = (username, socket) => async (dispatch) => {
+    socket.emit('message',
+        {
+            type: 'setUsername',
+            payload: {
+                userName: username
+            }
+        })
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom';
 import 'containers/Home/Home.css';
-import { setUsername } from 'actions/userActions';
+import { addUsername } from 'actions/userActions';
 import Loader from 'react-loader-spinner'
 
 
@@ -16,23 +16,29 @@ class Home extends React.Component {
         ]
     }
 
-    componentWillMount(props) {
+    componentWillMount() {
         const { greetings } = this.state
         const item = greetings[Math.floor(Math.random() * greetings.length)];
-        this.setState({ item, isLoading: this.props.user.isLoading })
+
+        this.setState({
+            item,
+            isLoading: this.props.user.isLoading
+        })
     }
 
     handleInputOnKeyPressed = (event) => {
         if (event.key === 'Enter' && event.target.value.length >= 1) {
             console.log(event.target.value)
-            const { setUsername } = this.props;
+            const { addUsername } = this.props;
 
             this.setState({ inputUsernameValue: event.target.value })
-            setUsername(event.target.value, this.props.history);
+            addUsername(event.target.value, this.props.history);
         }
     }
 
     render() {
+        localStorage.clear();
+        
         const { item } = this.state;
         const { user: { isLoading } } = this.props;
 
@@ -71,7 +77,7 @@ const mapStateToProps = store => {
 }
 
 const mapDispatchToProps = {
-    setUsername
+    addUsername
 }
 
 export default withRouter(connect(

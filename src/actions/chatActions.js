@@ -1,5 +1,4 @@
 import { store } from 'store/configureStore';
-import { socket } from 'socket';
 
 export const NEW_MESSAGE_REQUEST = 'NEW_MESSAGE_REQUEST';
 export const NEW_MESSAGE_SUCCESS = 'NEW_MESSAGE_SUCCESS';
@@ -25,7 +24,7 @@ export const addMessageDirectly = (message_obj) => {
     }
 }
 
-export const sendMessage = (message) => {
+export const sendMessage = (message, socket) => {
     socket.emit(
         'message',
         {

@@ -1,27 +1,51 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { withRouter, Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import 'containers/Chat/Chat.css';
 import { initSocket } from 'socket';
 import { sendMessage, addMessage } from 'actions/chatActions';
+import { setUsername } from 'actions/userActions';
+import io from 'socket.io-client';
+
 
 class Chat extends React.Component {
+    socket = io('http://185.87.51.125:3001', {
+        path: '/ws',
+        // transports: ['websocket', 'polling'],
+    });
+
     constructor(props) {
         super(props);
-        initSocket();
+        const { user } = this.props;
+        initSocket(this.socket);
+
+        if (user.username.length === 0) {
+            // return <Redirect to='/' />
+            this.props.history.push('/');
+        } else {
+            const { setUsername } = this.props;
+            setUsername(user.username, this.socket);
+            localStorage.setItem('chat_data', JSON.stringify({
+                username: user.username
+            }))
+        }
+
+    }
+
+    componentWillUnmount() {
+        this.socket.disconnect();
     }
 
     handleInputMessage = (event) => {
-        if (event.key === 'Enter') {
-
-            sendMessage(event.target.value);
+        if (event.key === 'Enter' && event.target.value.length !== 0) {
+            sendMessage(event.target.value, this.socket);
 
             const { addMessage, user } = this.props;
+
             addMessage({
                 type: 'sendMessage',
                 payload: {
                     userName: user.username,
-                    socketId: 'BNxrjnF4VtUl3f2rAAAD',
                     message: event.target.value
                 }
             })
@@ -30,12 +54,6 @@ class Chat extends React.Component {
     }
 
     render() {
-        const { user } = this.props;
-
-        if (user.username.length === 0) {
-            return <Redirect to='/' />
-        }
-
         const { chat } = this.props;
 
         return (
@@ -45,8 +63,6 @@ class Chat extends React.Component {
                         {chat.messages.map(el => {
                             return (
                                 <div key={Math.random() * 1000
-                                    // el.payload.socketId
-                                    // Date.now()*2
                                 }>
                                     {el.payload.userName ? el.payload.userName : "undefined"}
                                     : {el.payload.message}
@@ -71,7 +87,7 @@ const mapStateToProps = store => {
 }
 
 const mapDispatchToProps = {
-    addMessage
+    addMessage, setUsername
 }
 
 export default withRouter(connect(

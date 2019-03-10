@@ -1,29 +1,32 @@
 import {
-    SET_USERNAME_REQUEST,
-    SET_USERNAME_SUCCESS,
-    SET_USERNAME_FAIL,
-  } from 'actions/userActions';
-  
-  const initialState = {
-    username: '',
-    error: '',
-    isLoading: false,
-  }
+  SET_USERNAME_REQUEST,
+  SET_USERNAME_SUCCESS,
+  SET_USERNAME_FAIL,
+} from 'actions/userActions';
 
-  const userReducer = (state = initialState, action) => {
-    switch (action.type) {
-      case SET_USERNAME_REQUEST:
-        return { ...state, isLoading: true, error: '' }
-  
-      case SET_USERNAME_SUCCESS:
-        return { ...state, isLoading: false, username: action.payload.username }
-  
-      case SET_USERNAME_FAIL:
-        return { ...state, isLoading: false, error: action.payload.message }
-  
-      default:
-        return state
-    }
-  }
+const storageChat = localStorage.getItem('chat_data');
 
-  export default userReducer;
+const initialState = {
+  username: storageChat === undefined || storageChat === null
+    ? '' : JSON.parse(storageChat).username,
+  error: '',
+  isLoading: false,
+}
+
+const userReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case SET_USERNAME_REQUEST:
+      return { ...state, isLoading: true, error: '' }
+
+    case SET_USERNAME_SUCCESS:
+      return { ...state, isLoading: false, username: action.payload.username }
+
+    case SET_USERNAME_FAIL:
+      return { ...state, isLoading: false, error: action.payload.message }
+
+    default:
+      return state
+  }
+}
+
+export default userReducer;
