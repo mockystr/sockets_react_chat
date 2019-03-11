@@ -16,14 +16,15 @@ class Chat extends React.Component {
 
     constructor(props) {
         super(props);
+
         const { user } = this.props;
         initSocket(this.socket);
 
         if (user.username.length === 0) {
-            // return <Redirect to='/' />
             this.props.history.push('/');
         } else {
             const { setUsername } = this.props;
+
             setUsername(user.username, this.socket);
             localStorage.setItem('chat_data', JSON.stringify({
                 username: user.username
@@ -62,15 +63,15 @@ class Chat extends React.Component {
                     <div className='message-block'>
                         {chat.messages.map(el => {
                             return (
-                                <div key={Math.random() * 1000
-                                }>
+                                <div key={Math.random() * 1000}>
                                     {el.payload.userName ? el.payload.userName : "undefined"}
                                     : {el.payload.message}
                                 </div>
                             )
                         })}
                     </div>
-                    <input placeholder='your message...' id='message_input' className='input-block' type='text'
+                    <input placeholder='message...'
+                        id='message_input' className='input-block' type='text'
                         onKeyPress={this.handleInputMessage}
                     />
                 </div>

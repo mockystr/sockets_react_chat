@@ -1,16 +1,12 @@
 import {
     NEW_MESSAGE_REQUEST,
     NEW_MESSAGE_SUCCESS,
-    NEW_MESSAGE_FAIL
+    NEW_MESSAGE_FAIL,
+    RESET_CHAT_DATA,
 } from 'actions/chatActions';
 
 const initialState = {
-    messages: [
-        // {
-        //     payload: { socketId: "BNxrjnF4VtUl3f2rAAAD", message: "fuck" },
-        //     type: "sendMessage"
-        // },
-    ],
+    messages: [],
     error: '',
     isLoading: false,
 }
@@ -21,7 +17,6 @@ const chatReducer = (state = initialState, action) => {
             return { ...state, isLoading: true, error: '' }
 
         case NEW_MESSAGE_SUCCESS:
-            console.log("from reducer ", action.payload);
             return {
                 ...state, isLoading: false,
                 messages: [...state.messages, action.payload.message_obj]
@@ -29,6 +24,9 @@ const chatReducer = (state = initialState, action) => {
 
         case NEW_MESSAGE_FAIL:
             return { ...state, isLoading: false, error: action.payload.message }
+
+        case RESET_CHAT_DATA:
+            return initialState;
 
         default:
             return state

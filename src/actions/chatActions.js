@@ -3,6 +3,18 @@ import { store } from 'store/configureStore';
 export const NEW_MESSAGE_REQUEST = 'NEW_MESSAGE_REQUEST';
 export const NEW_MESSAGE_SUCCESS = 'NEW_MESSAGE_SUCCESS';
 export const NEW_MESSAGE_FAIL = 'NEW_MESSAGE_FAIL';
+export const RESET_CHAT_DATA = 'RESET_CHAT_DATA';
+
+export const resetChatData = () => async (dispatch) => {
+    try {
+        dispatch({
+            type: RESET_CHAT_DATA,
+        })
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
 
 export const addMessageDirectly = (message_obj) => {
     try {

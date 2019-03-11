@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom';
 import 'containers/Home/Home.css';
 import { addUsername } from 'actions/userActions';
+import { resetChatData } from 'actions/chatActions';
 import Loader from 'react-loader-spinner'
 
 
@@ -14,6 +15,14 @@ class Home extends React.Component {
             'i need your username',
             'hi. username?'
         ]
+    }
+
+    constructor(props) {
+        super(props);
+
+        const { resetChatData, messages } = this.props;
+        localStorage.clear();
+        if (messages.length !== 0) resetChatData();
     }
 
     componentWillMount() {
@@ -37,10 +46,8 @@ class Home extends React.Component {
     }
 
     render() {
-        localStorage.clear();
-        
-        const { item } = this.state;
         const { user: { isLoading } } = this.props;
+        const { item } = this.state;
 
         return (
             <div className='container'>
@@ -72,12 +79,13 @@ class Home extends React.Component {
 
 const mapStateToProps = store => {
     return {
-        user: store.user
+        user: store.user,
+        messages: store.chat.messages,
     }
 }
 
 const mapDispatchToProps = {
-    addUsername
+    addUsername, resetChatData
 }
 
 export default withRouter(connect(
