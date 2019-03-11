@@ -31,10 +31,15 @@ class Chat extends React.Component {
             }))
         }
 
+        this.handleMessageBlockChange = this.handleMessageBlockChange.bind(this);
     }
 
     componentWillUnmount() {
         this.socket.disconnect();
+    }
+
+    handleMessageBlockChange = (event) => {
+        console.log('asd');
     }
 
     handleInputMessage = (event) => {
@@ -60,14 +65,33 @@ class Chat extends React.Component {
         return (
             <div className='container'>
                 <div id='chat-block-id' className='chat-block'>
-                    <div className='message-block'>
+                    <div className='message-block'
+                        onChange={this.handleMessageBlockChange}>
                         {chat.messages.map(el => {
-                            return (
-                                <div key={Math.random() * 1000}>
-                                    {el.payload.userName ? el.payload.userName : "undefined"}
-                                    : {el.payload.message}
-                                </div>
-                            )
+                            if (el.type === 'sendMessage')
+                                return (
+                                    <div key={Math.random() * 1000}>
+                                        {el.payload.userName ? el.payload.userName : "undefined"}
+                                        : {el.payload.message}
+                                    </div>
+                                )
+                            else if (el.type === 'userJoin')
+                                return (
+                                    <div>
+                                        <span className='userJoin'>
+                                            {el.payload.userName}
+                                        </span> joined the chat
+                                    </div>
+                                )
+                            else if (el.type === 'userLeft')
+                                return (
+                                    <div>
+                                        <span className='userLeft'>
+                                            {el.payload.userName}
+                                        </span> left the chat
+                                    </div>
+                                )
+                            return <div></div>
                         })}
                     </div>
                     <input placeholder='message...'

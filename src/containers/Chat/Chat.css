@@ -7,10 +7,19 @@
 }
 
 .message-block {
-    height: 85vh;
+    height: 80vh;
     overflow: auto;
+    font-size: 20px;
 }
 
 .input-block {
-    height: 15vh;
+    height: 10vh;
+}
+
+.userLeft {
+    color: red;
+}
+
+.userJoin {
+    color: green;
 }
