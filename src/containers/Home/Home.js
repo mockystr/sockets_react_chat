@@ -56,7 +56,7 @@ class Home extends React.Component {
                         <h2>{item}</h2>
                         <div className="input-field col s12 l8 m8 offset-l2 offset-m2">
                             <input placeholder="username..." id="first_name" type="text" className="validate"
-                                onKeyPress={this.handleInputOnKeyPressed} />
+                                onKeyPress={this.handleInputOnKeyPressed} autoFocus/>
                         </div>
                     </div>
                 </div>

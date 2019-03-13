@@ -70,14 +70,14 @@ class Chat extends React.Component {
                         {chat.messages.map(el => {
                             if (el.type === 'sendMessage')
                                 return (
-                                    <div key={Math.random() * 1000}>
+                                    <div key={Math.random() * 100000}>
                                         {el.payload.userName ? el.payload.userName : "undefined"}
                                         : {el.payload.message}
                                     </div>
                                 )
                             else if (el.type === 'userJoin')
                                 return (
-                                    <div>
+                                    <div key={Math.random() * 100000}>
                                         <span className='userJoin'>
                                             {el.payload.userName}
                                         </span> joined the chat
@@ -85,16 +85,17 @@ class Chat extends React.Component {
                                 )
                             else if (el.type === 'userLeft')
                                 return (
-                                    <div>
+                                    <div key={Math.random() * 100000}>
                                         <span className='userLeft'>
                                             {el.payload.userName}
                                         </span> left the chat
                                     </div>
                                 )
-                            return <div></div>
+
+                            return <div key={Math.random() * 100000}></div>
                         })}
                     </div>
-                    <input placeholder='message...'
+                    <input autoFocus placeholder='message...'
                         id='message_input' className='input-block' type='text'
                         onKeyPress={this.handleInputMessage}
                     />
