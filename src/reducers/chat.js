@@ -17,9 +17,10 @@ const chatReducer = (state = initialState, action) => {
             return { ...state, isLoading: true, error: '' }
 
         case NEW_MESSAGE_SUCCESS:
+            // console.log(action.payload, 'from reducer new message')
             return {
                 ...state, isLoading: false,
-                messages: [...state.messages, action.payload.message_obj]
+                messages: [...state.messages, action.payload]
             }
 
         case NEW_MESSAGE_FAIL:

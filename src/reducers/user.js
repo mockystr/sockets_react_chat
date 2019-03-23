@@ -7,8 +7,12 @@ import {
 const storageChat = localStorage.getItem('chat_data');
 
 const initialState = {
-  username: storageChat === undefined || storageChat === null
-    ? '' : JSON.parse(storageChat).username,
+  user: {
+    username: storageChat === undefined || storageChat === null
+      ? null : JSON.parse(storageChat).username,
+    color: storageChat === undefined || storageChat === null
+      ? null : JSON.parse(storageChat).color,
+  },
   error: '',
   isLoading: false,
 }
@@ -19,7 +23,7 @@ const userReducer = (state = initialState, action) => {
       return { ...state, isLoading: true, error: '' }
 
     case SET_USERNAME_SUCCESS:
-      return { ...state, isLoading: false, username: action.payload.username }
+      return { ...state, isLoading: false, user: action.payload }
 
     case SET_USERNAME_FAIL:
       return { ...state, isLoading: false, error: action.payload.message }

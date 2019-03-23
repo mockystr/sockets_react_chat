@@ -18,13 +18,15 @@ export const resetChatData = () => async (dispatch) => {
 
 export const addMessageDirectly = (message_obj) => {
     try {
+        // console.log('addMessage fired');
         store.dispatch({
             type: NEW_MESSAGE_REQUEST,
         })
+        // console.log(message_obj, 'message_obj from addDirectly');
 
         store.dispatch({
             type: NEW_MESSAGE_SUCCESS,
-            payload: { message_obj }
+            payload: message_obj
         });
     } catch (err) {
         console.log(err);
@@ -54,10 +56,11 @@ export const addMessage = (message_obj) => async (dispatch) => {
         dispatch({
             type: NEW_MESSAGE_REQUEST,
         })
+        // console.log(message_obj, 'message_obj from addMesagge');
 
         dispatch({
             type: NEW_MESSAGE_SUCCESS,
-            payload: { message_obj }
+            payload: message_obj
         });
     } catch (err) {
         console.log(err);

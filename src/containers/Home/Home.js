@@ -35,13 +35,22 @@ class Home extends React.Component {
         })
     }
 
+    getRandomColor = () => {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
     handleInputOnKeyPressed = (event) => {
         if (event.key === 'Enter' && event.target.value.length >= 1) {
-            console.log(event.target.value)
+            // console.log(event.target.value)
             const { addUsername } = this.props;
 
             this.setState({ inputUsernameValue: event.target.value })
-            addUsername(event.target.value, this.props.history);
+            addUsername(event.target.value, this.getRandomColor(), this.props.history);
         }
     }
 

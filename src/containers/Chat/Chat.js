@@ -20,14 +20,15 @@ class Chat extends React.Component {
         const { user } = this.props;
         initSocket(this.socket);
 
-        if (user.username.length === 0) {
+        if (user.user.username.length === 0) {
             this.props.history.push('/');
         } else {
             const { setUsername } = this.props;
-
-            setUsername(user.username, this.socket);
+            // console.log('user.user', user.user);
+            setUsername(user.user.username, user.user.color, this.socket);
             localStorage.setItem('chat_data', JSON.stringify({
-                username: user.username
+                username: user.user.username,
+                color: user.user.color,
             }))
         }
 
@@ -51,10 +52,14 @@ class Chat extends React.Component {
             addMessage({
                 type: 'sendMessage',
                 payload: {
-                    userName: user.username,
+                    user: {
+                        userName: user.user.username,
+                        color: user.user.color,
+                    },
                     message: event.target.value
                 }
             })
+
             event.target.value = '';
         }
     }
@@ -68,18 +73,23 @@ class Chat extends React.Component {
                     <div className='message-block'
                         onChange={this.handleMessageBlockChange}>
                         {chat.messages.map(el => {
-                            if (el.type === 'sendMessage')
+                            console.log(el, 'el');
+                            if (el.type === 'sendMessage') {
+                                console.log(el.payload, 'el.payload')
                                 return (
                                     <div key={Math.random() * 100000}>
-                                        {el.payload.userName ? el.payload.userName : "undefined"}
+                                        <span style={{ color: el.payload.user.color }}>
+                                            {el.payload.user.userName ? el.payload.user.userName : "undefined"}
+                                        </span>
                                         : {el.payload.message}
                                     </div>
                                 )
+                            }
                             else if (el.type === 'userJoin')
                                 return (
                                     <div key={Math.random() * 100000}>
                                         <span className='userJoin'>
-                                            {el.payload.userName}
+                                            {el.payload.user.userName ? el.payload.user.userName : "undefined"}
                                         </span> joined the chat
                                     </div>
                                 )
@@ -87,7 +97,7 @@ class Chat extends React.Component {
                                 return (
                                     <div key={Math.random() * 100000}>
                                         <span className='userLeft'>
-                                            {el.payload.userName}
+                                            {el.payload.user.userName ? el.payload.user.userName : "undefined"}
                                         </span> left the chat
                                     </div>
                                 )
