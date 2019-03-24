@@ -24,7 +24,6 @@ class Chat extends React.Component {
             this.props.history.push('/');
         } else {
             const { setUsername } = this.props;
-            // console.log('user.user', user.user);
             setUsername(user.user.username, user.user.color, this.socket);
             localStorage.setItem('chat_data', JSON.stringify({
                 username: user.user.username,
@@ -73,9 +72,7 @@ class Chat extends React.Component {
                     <div className='message-block'
                         onChange={this.handleMessageBlockChange}>
                         {chat.messages.map(el => {
-                            console.log(el, 'el');
                             if (el.type === 'sendMessage') {
-                                console.log(el.payload, 'el.payload')
                                 return (
                                     <div key={Math.random() * 100000}>
                                         <span style={{ color: el.payload.user.color }}>

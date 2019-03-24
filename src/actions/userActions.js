@@ -25,8 +25,6 @@ export const addUsername = (username, color, history) => async (dispatch) => {
 }
 
 export const setUsername = (username, color, socket) => async (dispatch) => {
-    // console.log(username, color, 'from set username')
-    
     socket.emit('message',
         {
             type: 'setUsername',
