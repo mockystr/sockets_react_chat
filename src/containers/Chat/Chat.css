@@ -23,3 +23,10 @@
 .userJoin {
     color: green;
 }
+
+.userCounter{
+    font-size: 20px;
+    color: rgb(20, 209, 146);
+    margin-top: 5%;
+    margin-left: 100%;   
+}

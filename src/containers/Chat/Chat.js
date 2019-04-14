@@ -1,12 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom';
+import { withRouter,Link } from 'react-router-dom';
 import 'containers/Chat/Chat.css';
 import { initSocket } from 'socket';
 import { sendMessage, addMessage } from 'actions/chatActions';
 import { setUsername } from 'actions/userActions';
+import { Dropdown,Divider, Button } from 'react-materialize';
 import io from 'socket.io-client';
-
+// import logo from './network.svg'
 
 class Chat extends React.Component {
     socket = io('http://185.87.51.125:3001', {
@@ -24,8 +25,8 @@ class Chat extends React.Component {
             this.props.history.push('/');
         } else {
             const { setUsername } = this.props;
-            // console.log('user.user', user.user);
             setUsername(user.user.username, user.user.color, this.socket);
+            
             localStorage.setItem('chat_data', JSON.stringify({
                 username: user.user.username,
                 color: user.user.color,
@@ -69,6 +70,17 @@ class Chat extends React.Component {
 
         return (
             <div className='container'>
+            <div className='userCounter'>
+            <Dropdown trigger={<Button>{chat.onlineUsers.length} Users</Button>} options={{"coverTrigger":0}}>
+                {chat.onlineUsers.map(user=> {
+                    return(
+                        <div key={Math.random() * 100000}>
+                            <a href="#">{user.user.userName}</a>
+                        </div>
+                    )
+                })}                
+                </Dropdown>
+            </div>                
                 <div id='chat-block-id' className='chat-block'>
                     <div className='message-block'
                         onChange={this.handleMessageBlockChange}>
@@ -85,14 +97,15 @@ class Chat extends React.Component {
                                     </div>
                                 )
                             }
-                            else if (el.type === 'userJoin')
+                            else if (el.type === 'userJoin'){
+                                // this.setState({Artem:1})
                                 return (
                                     <div key={Math.random() * 100000}>
                                         <span className='userJoin'>
                                             {el.payload.user.userName ? el.payload.user.userName : "undefined"}
                                         </span> joined the chat
                                     </div>
-                                )
+                                )}
                             else if (el.type === 'userLeft')
                                 return (
                                     <div key={Math.random() * 100000}>
@@ -111,6 +124,7 @@ class Chat extends React.Component {
                     />
                 </div>
             </div>
+                    
         )
     }
 }
