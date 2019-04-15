@@ -7,7 +7,7 @@
 }
 
 .message-block {
-    height: 80vh;
+    height: 70vh;
     overflow: auto;
     font-size: 20px;
 }
@@ -26,7 +26,8 @@
 
 .userCounter{
     font-size: 20px;
-    color: rgb(20, 209, 146);
+    color: red;
     margin-top: 5%;
-    margin-left: 100%;   
+    margin-left: 95%;   
 }
+

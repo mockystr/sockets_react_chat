@@ -5,11 +5,10 @@ export const initSocket = (socket) => {
         // console.log(data.payload);
         // console.log(socket);
         console.log("slcasc",data)
-        // if (data.type === "userJoin"){
-        //     // console.log(data.messages.onlineUsers)
-        //     addOnlineUsersDirectly(data);
-        // }
-        addOnlineUsersDirectly(data)
+        if (data.type === "userJoin" || data.type==="userLeft"){
+            addOnlineUsersDirectly(data);
+
+        }
         addMessageDirectly(data);
         
     });

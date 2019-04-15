@@ -1,13 +1,11 @@
-import produce from 'immer';
+
 import {
     NEW_MESSAGE_REQUEST,
     NEW_MESSAGE_SUCCESS,
     NEW_MESSAGE_FAIL,
     RESET_CHAT_DATA,
     NEW_ONLINE_USER,
-    NEW_ONLINE_USER_FAIL,
-    ONLINE_USER_LEFT,
-    ONLINE_USER_LEFT_FAIL
+    NEW_ONLINE_USER_FAIL
 } from 'actions/chatActions';
 
 const initialState = {
