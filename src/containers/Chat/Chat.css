@@ -7,7 +7,7 @@
 }
 
 .message-block {
-    height: 80vh;
+    height: 70vh;
     overflow: auto;
     font-size: 20px;
 }
@@ -23,3 +23,11 @@
 .userJoin {
     color: green;
 }
+
+.userCounter{
+    font-size: 20px;
+    color: red;
+    margin-top: 5%;
+    margin-left: 95%;   
+}
+
