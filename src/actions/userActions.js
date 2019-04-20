@@ -32,6 +32,8 @@ export const addUsername = (username, color, history) => async (dispatch) => {
 }
 
 export const setUsername = (username, color, socket) => async (dispatch) => {
+    console.log(username, color);
+    
     socket.emit('message',
         {
             type: 'setUsername',
@@ -40,4 +42,24 @@ export const setUsername = (username, color, socket) => async (dispatch) => {
                 color: color
             }
         })
+}
+
+export const refreshUsername = (username, color, hash) => async (dispatch) => {
+    try {
+        dispatch({
+            type: SET_USERNAME_REQUEST,
+        })
+
+        dispatch({
+            type: SET_USERNAME_SUCCESS,
+            payload: { username, color, hash }
+        })
+    } catch (err) {
+        console.log(err);
+
+        dispatch({
+            type: SET_USERNAME_FAIL,
+            payload: { error: err }
+        })
+    }
 }

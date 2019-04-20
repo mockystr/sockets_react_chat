@@ -38,6 +38,7 @@ class Chat extends React.Component {
     }
 
     componentWillUnmount() {
+        console.log('asdasdasdasdasdasdasd');
         this.socket.disconnect();
     }
 
@@ -49,16 +50,9 @@ class Chat extends React.Component {
         const { user } = this.props;
 
         if (event.key === 'Enter' && event.target.value.length !== 0) {
-            sendMessage(event.target.value, user.user.hash,
-                this.convertToBinary(event.target.value), this.socket);
+            sendMessage(event.target.value, user.user.hash, this.socket);
             event.target.value = '';
         }
-    }
-
-    convertToBinary = (message) => {
-        return (message.split('').map(function (char) {
-            return char.charCodeAt(0).toString(2);
-        }).join(''));
     }
 
     render() {
@@ -87,7 +81,8 @@ class Chat extends React.Component {
                                 return (
                                     <div key={Math.random() * 100000}>
                                         {el.payload.error ? "!!!error!!!" : null}
-                                        <span style={{ color: el.payload.user.color }}>
+                                        <span style={{ color: el.payload.user.color ?
+                                        el.payload.user.color : "" }}>
                                             {el.payload.user.userName ? el.payload.user.userName : "undefined"}
                                         </span>
                                         : {el.payload.message}
