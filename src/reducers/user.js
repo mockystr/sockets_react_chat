@@ -12,6 +12,8 @@ const initialState = {
       ? null : JSON.parse(storageChat).username,
     color: storageChat === undefined || storageChat === null
       ? null : JSON.parse(storageChat).color,
+    hash: storageChat === undefined || storageChat === null
+      ? null : JSON.parse(storageChat).hash,
   },
   error: '',
   isLoading: false,

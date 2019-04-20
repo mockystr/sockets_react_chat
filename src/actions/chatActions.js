@@ -42,15 +42,15 @@ export const addMessageDirectly = (message_obj) => {
 export const addOnlineUsersDirectly = (onlineUser_obj) => {
     try {
         store.dispatch({
-            type:NEW_ONLINE_USER,
+            type: NEW_ONLINE_USER,
             payload: onlineUser_obj.payload.onlineUsers
         });
-    } catch(err) {
+    } catch (err) {
         console.log(err)
 
         store.dispatch({
             type: NEW_ONLINE_USER_FAIL,
-            payload: {error:err}
+            payload: { error: err }
         })
     }
 }
@@ -58,26 +58,28 @@ export const addOnlineUsersDirectly = (onlineUser_obj) => {
 export const deleteOnlineUsersDirectly = (onlineUser_obj) => {
     try {
         store.dispatch({
-            type:ONLINE_USER_LEFT,
+            type: ONLINE_USER_LEFT,
             payload: onlineUser_obj
         });
-    } catch(err) {
+    } catch (err) {
         console.log(err)
 
         store.dispatch({
             type: ONLINE_USER_LEFT_FAIL,
-            payload: {error:err}
+            payload: { error: err }
         })
     }
 }
 
-export const sendMessage = (message, socket) => {
+export const sendMessage = (message, hash, binary, socket) => {
     socket.emit(
         'message',
         {
             type: "sendMessage",
             payload: {
-                message: message
+                message: message,
+                hash: hash,
+                binary: binary
             }
         }
     )
@@ -102,4 +104,3 @@ export const addMessage = (message_obj) => async (dispatch) => {
         })
     }
 }
-

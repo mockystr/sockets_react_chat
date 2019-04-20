@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "aws-sdk": "^2.441.0",
+    "bcryptjs": "^2.4.3",
     "immer": "^2.1.5",
     "materialize-css": "^1.0.0",
     "react": "^16.8.3",
