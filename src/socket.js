@@ -1,16 +1,23 @@
-import io from 'socket.io-client';
-import { addMessageDirectly } from 'actions/chatActions';
+import { addMessageDirectly, addOnlineUsersDirectly } from 'actions/chatActions';
+import { store } from 'store/configureStore';
 
-export const socket = io('http://185.87.51.125:3001', {
-    path: '/ws',
-    // transports: ['websocket', 'polling'],
-});
-
-
-export const initSocket = () => {
+export const initSocket = (socket) => {
     socket.on('message', (data) => {
         console.log(data);
 
-        addMessageDirectly(data);
+        if (data.type === "userJoin" || data.type === "userLeft") {
+            addOnlineUsersDirectly(data);
+        }
+        else {
+            if (data.payload.error === true) {
+                if (checkErrorUser(data.payload.hash)) {
+                    addMessageDirectly(data);
+                }
+            }
+            else addMessageDirectly(data);
+        };
     });
 }
+
+
+export const checkErrorUser = hash => store.getState().user.user.hash === hash

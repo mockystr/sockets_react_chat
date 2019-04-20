@@ -2,7 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom';
 import 'containers/Home/Home.css';
-import { setUsername } from 'actions/userActions';
+import { addUsername } from 'actions/userActions';
+import { resetChatData } from 'actions/chatActions';
 import Loader from 'react-loader-spinner'
 
 
@@ -16,25 +17,46 @@ class Home extends React.Component {
         ]
     }
 
-    componentWillMount(props) {
+    constructor(props) {
+        super(props);
+
+        const { resetChatData, messages } = this.props;
+        localStorage.clear();
+        if (messages.length !== 0) resetChatData();
+    }
+
+    componentWillMount() {
         const { greetings } = this.state
         const item = greetings[Math.floor(Math.random() * greetings.length)];
-        this.setState({ item, isLoading: this.props.user.isLoading })
+
+        this.setState({
+            item,
+            isLoading: this.props.user.isLoading
+        })
+    }
+
+    getRandomColor = () => {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
     }
 
     handleInputOnKeyPressed = (event) => {
         if (event.key === 'Enter' && event.target.value.length >= 1) {
-            console.log(event.target.value)
-            const { setUsername } = this.props;
+            // console.log(event.target.value)
+            const { addUsername } = this.props;
 
             this.setState({ inputUsernameValue: event.target.value })
-            setUsername(event.target.value, this.props.history);
+            addUsername(event.target.value, this.getRandomColor(), this.props.history);
         }
     }
 
     render() {
-        const { item } = this.state;
         const { user: { isLoading } } = this.props;
+        const { item } = this.state;
 
         return (
             <div className='container'>
@@ -43,7 +65,7 @@ class Home extends React.Component {
                         <h2>{item}</h2>
                         <div className="input-field col s12 l8 m8 offset-l2 offset-m2">
                             <input placeholder="username..." id="first_name" type="text" className="validate"
-                                onKeyPress={this.handleInputOnKeyPressed} />
+                                onKeyPress={this.handleInputOnKeyPressed} autoFocus/>
                         </div>
                     </div>
                 </div>
@@ -66,12 +88,13 @@ class Home extends React.Component {
 
 const mapStateToProps = store => {
     return {
-        user: store.user
+        user: store.user,
+        messages: store.chat.messages,
     }
 }
 
 const mapDispatchToProps = {
-    setUsername
+    addUsername, resetChatData
 }
 
 export default withRouter(connect(
