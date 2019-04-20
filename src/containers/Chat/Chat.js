@@ -81,8 +81,7 @@ class Chat extends React.Component {
                                 return (
                                     <div key={Math.random() * 100000}>
                                         {el.payload.error ? "!!!error!!!" : null}
-                                        <span style={{ color: el.payload.user.color ?
-                                        el.payload.user.color : "" }}>
+                                        <span style={{ color: el.payload.user.color }}>
                                             {el.payload.user.userName ? el.payload.user.userName : "undefined"}
                                         </span>
                                         : {el.payload.message}

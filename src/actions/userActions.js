@@ -33,7 +33,7 @@ export const addUsername = (username, color, history) => async (dispatch) => {
 
 export const setUsername = (username, color, socket) => async (dispatch) => {
     console.log(username, color);
-    
+
     socket.emit('message',
         {
             type: 'setUsername',
@@ -43,6 +43,19 @@ export const setUsername = (username, color, socket) => async (dispatch) => {
             }
         })
 }
+export const setUsernameDirectly = (username, color, socket) => {
+    console.log(username, color);
+
+    socket.emit('message',
+        {
+            type: 'setUsername',
+            payload: {
+                userName: username,
+                color: color
+            }
+        })
+}
+
 
 export const refreshUsername = (username, color, hash) => async (dispatch) => {
     try {
