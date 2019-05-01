@@ -1,5 +1,9 @@
 import { addMessageDirectly, addOnlineUsersDirectly } from 'actions/chatActions';
 import { store } from 'store/configureStore';
+import { setUsernameDirectly } from 'actions/userActions';
+import { sendMessage } from 'actions/chatActions';
+import { refreshUsername } from 'actions/userActions';
+
 
 export const initSocket = (socket) => {
     socket.on('message', (data) => {
@@ -14,7 +18,15 @@ export const initSocket = (socket) => {
                     addMessageDirectly(data);
                 }
             }
-            else addMessageDirectly(data);
+            else {
+                if (data.payload.user === null) {
+                    const chat_data = JSON.parse(localStorage.getItem('chat_data'));
+                    refreshUsername(chat_data.username, chat_data.color, chat_data.hash);
+                    setUsernameDirectly(chat_data.username, chat_data.color, socket);
+                    sendMessage(data.payload.message, data.payload.hash, socket);
+                }
+                else addMessageDirectly(data);
+            }
         };
     });
 }
