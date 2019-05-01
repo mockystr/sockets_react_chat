@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "alertifyjs": "^1.11.2",
     "aws-sdk": "^2.441.0",
     "bcryptjs": "^2.4.3",
     "download-file": "^0.1.5",
@@ -12,6 +13,7 @@
     "materialize-css": "^1.0.0",
     "mkdirp": "^0.5.1",
     "react": "^16.8.3",
+    "react-alertify-js": "0.0.1",
     "react-dom": "^16.8.3",
     "react-loader-spinner": "^2.3.0",
     "react-materialize": "^3.0.5",

@@ -3,6 +3,7 @@ import { store } from 'store/configureStore';
 import { setUsernameDirectly } from 'actions/userActions';
 import { sendMessage } from 'actions/chatActions';
 import { refreshUsername } from 'actions/userActions';
+import * as alertify from 'alertifyjs';
 
 
 export const initSocket = (socket) => {
@@ -15,7 +16,15 @@ export const initSocket = (socket) => {
         else {
             if (data.payload.error === true) {
                 if (checkErrorUser(data.payload.hash)) {
-                    addMessageDirectly(data);
+                    let message;
+
+                    if (data.payload.message.length >= 10) {
+                        message = `Failed to send message: ${data.payload.message.substring(0, 10)}...`;
+                    } else {
+                        message = `Failed to send message: ${data.payload.message}`;
+                    }
+                    
+                    alertify.notify(message, 'custom-error', 3, () => { });
                 }
             }
             else {
@@ -23,7 +32,7 @@ export const initSocket = (socket) => {
                     const chat_data = JSON.parse(localStorage.getItem('chat_data'));
                     refreshUsername(chat_data.username, chat_data.color, chat_data.hash);
                     setUsernameDirectly(chat_data.username, chat_data.color, socket);
-                    
+
                     if (data.payload.isFile === true) {
                         sendMessage({ fileHash: data.payload.fileHash }, data.payload.hash, socket);
                     } else {
