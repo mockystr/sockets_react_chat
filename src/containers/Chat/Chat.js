@@ -10,6 +10,8 @@ import io from 'socket.io-client';
 import logo from './networking.svg'
 import file_attach from './iconfinder_editor-attachment-paper-clip-2_763387.svg';
 import SocketIOFileClient from 'socket.io-file-client';
+import ScrollToBottom from 'react-scroll-to-bottom';
+import { css } from 'glamor';
 
 
 class Chat extends React.Component {
@@ -73,7 +75,6 @@ class Chat extends React.Component {
 
         if (event.key === 'Enter' && event.target.value.length !== 0) {
             sendMessage(event.target.value, user.user.hash, this.socket);
-            this.messageDivEl.scrollToBottom();
             event.target.value = '';
         }
     }
@@ -88,13 +89,12 @@ class Chat extends React.Component {
         event.target.value = '';
     }
 
-    getDivRef = (node) => {
-        this.messageDivEl = node;
-    }
-
     render() {
         const { chat } = this.props;
-
+        const ROOT_CSS = css({
+            height: 'inherit',
+            width: 'inherit'
+          });
         return (
             <div className='container'>
                 <div className='userCounter' >
@@ -112,40 +112,42 @@ class Chat extends React.Component {
                         })}
                     </Dropdown>
                 </div>
-                <div id='chat-block-id' className='chat-block' ref={this.getDivRef}>
+                <div id='chat-block-id' className='chat-block'>
                     <div className='message-block'>
-                        {chat.messages.map(el => {
-                            if (el.type === 'sendMessage') {
-                                return (
-                                    <div key={Math.random() * 100000}>
-                                        {el.payload.error ? "!!!error!!!" : null}
-                                        <span style={{ color: el.payload.user.color }}>
-                                            {el.payload.user.userName ? el.payload.user.userName : "undefined"}
-                                        </span>
-                                        : {el.payload.message}
+                        <ScrollToBottom className={ROOT_CSS}>
+                            {chat.messages.map(el => {
+                                if (el.type === 'sendMessage') {
+                                    return (
+                                        <div key={Math.random() * 100000}>
+                                            {el.payload.error ? "!!!error!!!" : null}
+                                            <span style={{ color: el.payload.user.color }}>
+                                                {el.payload.user.userName ? el.payload.user.userName : "undefined"}
+                                            </span>
+                                            : {el.payload.message}
+                                        </div>
+                                    )
+                                }
+                                else if (el.type === 'userJoin') {
+                                    return (
+                                        <div key={Math.random() * 100000}>
+                                            <span className='userJoin'>
+                                                {el.payload.user.userName ? el.payload.user.userName : "undefined"}
+                                            </span> joined the chat
                                     </div>
-                                )
-                            }
-                            else if (el.type === 'userJoin') {
-                                return (
-                                    <div key={Math.random() * 100000}>
-                                        <span className='userJoin'>
-                                            {el.payload.user.userName ? el.payload.user.userName : "undefined"}
-                                        </span> joined the chat
+                                    )
+                                }
+                                else if (el.type === 'userLeft')
+                                    return (
+                                        <div key={Math.random() * 100000}>
+                                            <span className='userLeft'>
+                                                {el.payload.user.userName ? el.payload.user.userName : "undefined"}
+                                            </span> left the chat
                                     </div>
-                                )
-                            }
-                            else if (el.type === 'userLeft')
-                                return (
-                                    <div key={Math.random() * 100000}>
-                                        <span className='userLeft'>
-                                            {el.payload.user.userName ? el.payload.user.userName : "undefined"}
-                                        </span> left the chat
-                                    </div>
-                                )
+                                    )
 
-                            return <div key={Math.random() * 100000}></div>
-                        })}
+                                return <div key={Math.random() * 100000}></div>
+                            })}
+                        </ScrollToBottom>
                     </div>
                     <div className='message_file_block'>
                         <div className='file_attach'>
@@ -153,7 +155,7 @@ class Chat extends React.Component {
                                 <img alt='attach' src={file_attach}
                                     style={{
                                         'cursor': 'pointer',
-                                        width: "35px"
+                                        width: "30px"
                                     }} />
                             </label>
                             <input type="file" id="file_attach" style={{ 'display': 'none' }}

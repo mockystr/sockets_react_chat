@@ -5,6 +5,7 @@
   "dependencies": {
     "aws-sdk": "^2.441.0",
     "bcryptjs": "^2.4.3",
+    "glamor": "^2.20.40",
     "immer": "^2.1.5",
     "materialize-css": "^1.0.0",
     "react": "^16.8.3",
