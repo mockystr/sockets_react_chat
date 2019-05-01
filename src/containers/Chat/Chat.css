@@ -8,7 +8,6 @@
 
 .message-block {
     height: 70vh;
-    overflow: auto;
     font-size: 20px;
 }
 
@@ -31,3 +30,17 @@
     margin-left: 95%;   
 }
 
+
+.message_file_block {
+    display: flex;
+    justify-content: space-between;
+}
+
+.file_attach {
+    margin-top: 1.2%;
+    width: 5%;
+}
+
+.massage_input__block {
+    width: 95%;
+}

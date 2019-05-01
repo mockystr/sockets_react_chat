@@ -71,13 +71,13 @@ export const deleteOnlineUsersDirectly = (onlineUser_obj) => {
     }
 }
 
-export const sendMessage = (message, hash, socket) => {
+export const sendMessage = (message_obj, hash, socket) => {
     socket.emit(
         'message',
         {
             type: "sendMessage",
             payload: {
-                message: message,
+                ...message_obj,
                 hash: hash,
             }
         }
