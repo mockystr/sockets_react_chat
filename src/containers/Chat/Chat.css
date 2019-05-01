@@ -44,3 +44,10 @@
 .massage_input__block {
     width: 95%;
 }
+
+.ajs-message.ajs-custom-error { 
+    color:rgba(0, 0, 0, 0.801);
+    background-color: rgba(214, 105, 105, 0.596);
+    border-radius: 8%;
+    border-color: #31708f; 
+}

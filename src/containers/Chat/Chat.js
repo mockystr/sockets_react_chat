@@ -21,12 +21,7 @@ class Chat extends React.Component {
         // transports: ['websocket', 'polling'],
     });
     uploader = new SocketIOFileClient(this.socket, {
-        // uploadDir: '../../files',
-        // accepts: ['image/png', 'text/html', 'image/jpeg', 'application/json', 'text/plain'], // chrome and some of browsers checking mp3 as 'audio/mp3', not 'audio/mpeg'
-        maxFileSize: 4194304, // 4 MB. default is undefined(no limit)
-        // chunkSize: 10240, // default is 10240(1KB)
-        // transmissionDelay: 0, // delay of each transmission, higher value saves more cpu resources, lower upload speed. default is 0(no delay)
-        // overwrite: true // overwrite file if exists, default is true.
+        maxFileSize: 4194304,
     });
 
     constructor(props) {
@@ -135,7 +130,6 @@ class Chat extends React.Component {
                                         }
                                         return (
                                             <div key={Math.random() * 100000}>
-                                                {el.payload.error ? "!!!error!!!" : null}
                                                 <span style={{ color: el.payload.user.color }}>
                                                     {el.payload.user.userName ? el.payload.user.userName : "undefined"}
                                                 </span>
@@ -148,7 +142,6 @@ class Chat extends React.Component {
                                     }
                                     return (
                                         <div key={Math.random() * 100000}>
-                                            {el.payload.error ? "!!!error!!!" : null}
                                             <span style={{ color: el.payload.user.color }}>
                                                 {el.payload.user.userName ? el.payload.user.userName : "undefined"}
                                             </span>
