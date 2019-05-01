@@ -12,7 +12,8 @@ import file_attach from './iconfinder_editor-attachment-paper-clip-2_763387.svg'
 import SocketIOFileClient from 'socket.io-file-client';
 import ScrollToBottom from 'react-scroll-to-bottom';
 import { css } from 'glamor';
-
+import { staticFileUrl } from 'api';
+import fetchDownload from 'fetch-download';
 
 class Chat extends React.Component {
     socket = io('http://185.87.51.125:3001', {
@@ -74,7 +75,7 @@ class Chat extends React.Component {
         const { user } = this.props;
 
         if (event.key === 'Enter' && event.target.value.length !== 0) {
-            sendMessage(event.target.value, user.user.hash, this.socket);
+            sendMessage({ message: event.target.value }, user.user.hash, this.socket);
             event.target.value = '';
         }
     }
@@ -94,7 +95,7 @@ class Chat extends React.Component {
         const ROOT_CSS = css({
             height: 'inherit',
             width: 'inherit'
-          });
+        });
         return (
             <div className='container'>
                 <div className='userCounter' >
@@ -117,6 +118,34 @@ class Chat extends React.Component {
                         <ScrollToBottom className={ROOT_CSS}>
                             {chat.messages.map(el => {
                                 if (el.type === 'sendMessage') {
+                                    if (el.payload.isFile === true) {
+                                        const file_ext = el.payload.fileHash.split('.').pop();
+
+                                        if (['jpeg', 'png', 'jpg'].includes(file_ext)) {
+                                            return (
+                                                <div key={Math.random() * 100000}>
+                                                    <span style={{ color: el.payload.user.color }}>
+                                                        {el.payload.user.userName ? el.payload.user.userName : "undefined"}
+                                                    </span>
+                                                    : <img src={staticFileUrl + el.payload.fileHash} alt='image_url_api'
+                                                        style={{ 'width': '400px' }} />
+                                                    ({Math.floor(el.payload.fileSize / 1024)} KB)
+                                                </div>
+                                            )
+                                        }
+                                        return (
+                                            <div key={Math.random() * 100000}>
+                                                {el.payload.error ? "!!!error!!!" : null}
+                                                <span style={{ color: el.payload.user.color }}>
+                                                    {el.payload.user.userName ? el.payload.user.userName : "undefined"}
+                                                </span>
+                                                : <span style={{ 'cursor': 'pointer', 'color': 'blue' }}
+                                                    onClick={(e) => fetchDownload(staticFileUrl + el.payload.fileHash)}>
+                                                    {el.payload.fileHash}
+                                                </span> ({Math.floor(el.payload.fileSize / 1024)} KB)
+                                            </div>
+                                        )
+                                    }
                                     return (
                                         <div key={Math.random() * 100000}>
                                             {el.payload.error ? "!!!error!!!" : null}

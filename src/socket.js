@@ -23,7 +23,12 @@ export const initSocket = (socket) => {
                     const chat_data = JSON.parse(localStorage.getItem('chat_data'));
                     refreshUsername(chat_data.username, chat_data.color, chat_data.hash);
                     setUsernameDirectly(chat_data.username, chat_data.color, socket);
-                    sendMessage(data.payload.message, data.payload.hash, socket);
+                    
+                    if (data.payload.isFile === true) {
+                        sendMessage({ fileHash: data.payload.fileHash }, data.payload.hash, socket);
+                    } else {
+                        sendMessage({ message: data.payload.message }, data.payload.hash, socket);
+                    }
                 }
                 else addMessageDirectly(data);
             }
