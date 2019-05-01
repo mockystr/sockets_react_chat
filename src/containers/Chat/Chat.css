@@ -31,3 +31,17 @@
     margin-left: 95%;   
 }
 
+
+.message_file_block {
+    display: flex;
+    justify-content: space-around;
+}
+
+.file_attach {
+    margin-top: 1%;
+    width: 5%;
+}
+
+.massage_input__block {
+    width: 95%;
+}
