@@ -14,33 +14,32 @@ export const initSocket = (socket) => {
             addOnlineUsersDirectly(data);
         }
         else {
-            if (data.payload.error === true) {
+            if (data.payload.user === null) {
+                const chat_data = JSON.parse(localStorage.getItem('chat_data'));
+                refreshUsername(chat_data.username, chat_data.color, chat_data.hash);
+                setUsernameDirectly(chat_data.username, chat_data.color, socket);
+
+                if (data.payload.isFile === true) {
+                    sendMessage({ fileHash: data.payload.fileHash }, data.payload.hash, socket);
+                } else {
+                    sendMessage({ message: data.payload.message }, data.payload.hash, socket);
+                }
+            }
+            else if (data.payload.error === true) {
                 if (checkErrorUser(data.payload.hash)) {
                     let message;
-
+                    console.log('error in message:', data.payload.user.username)
+                    
                     if (data.payload.message.length >= 10) {
                         message = `Failed to send message: ${data.payload.message.substring(0, 10)}...`;
                     } else {
                         message = `Failed to send message: ${data.payload.message}`;
                     }
-                    
+
                     alertify.notify(message, 'custom-error', 3, () => { });
                 }
             }
-            else {
-                if (data.payload.user === null) {
-                    const chat_data = JSON.parse(localStorage.getItem('chat_data'));
-                    refreshUsername(chat_data.username, chat_data.color, chat_data.hash);
-                    setUsernameDirectly(chat_data.username, chat_data.color, socket);
-
-                    if (data.payload.isFile === true) {
-                        sendMessage({ fileHash: data.payload.fileHash }, data.payload.hash, socket);
-                    } else {
-                        sendMessage({ message: data.payload.message }, data.payload.hash, socket);
-                    }
-                }
-                else addMessageDirectly(data);
-            }
+            else addMessageDirectly(data);
         };
     });
 }
