@@ -21,7 +21,7 @@ class Chat extends React.Component {
         // transports: ['websocket', 'polling'],
     });
     uploader = new SocketIOFileClient(this.socket, {
-        maxFileSize: 4194304,
+        // maxFileSize: 4194304,
     });
 
     constructor(props) {
@@ -123,7 +123,7 @@ class Chat extends React.Component {
                                                         {el.payload.user.userName ? el.payload.user.userName : "undefined"}
                                                     </span>
                                                     : <img src={staticFileUrl + el.payload.fileHash} alt='image_url_api'
-                                                        style={{ 'width': '400px' }} />
+                                                        style={{ 'max-width': '400px' }} />
                                                     ({Math.floor(el.payload.fileSize / 1024)} KB)
                                                 </div>
                                             )
