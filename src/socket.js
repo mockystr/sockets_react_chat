@@ -28,12 +28,12 @@ export const initSocket = (socket) => {
             else if (data.payload.error === true) {
                 if (checkErrorUser(data.payload.hash)) {
                     let message;
-                    console.log('error in message:', data.payload.user.username)
-                    
+                    console.log('error in message: user ', data.payload.user.userName);
+
                     if (data.payload.message.length >= 10) {
-                        message = `Failed to send message: ${data.payload.message.substring(0, 10)}...`;
+                        message = `Failed to send: ${data.payload.message.substring(0, 10)}...`;
                     } else {
-                        message = `Failed to send message: ${data.payload.message}`;
+                        message = `Failed to send: ${data.payload.message}`;
                     }
 
                     alertify.notify(message, 'custom-error', 3, () => { });
