@@ -47,7 +47,7 @@ class Chat extends React.Component {
             console.log('Aborted: ', fileInfo);
         });
 
-        if (user.user.username.length === 0) {
+        if (!user.user.username) {
             this.props.history.push('/');
         } else {
             const { setUsername } = this.props;
@@ -123,7 +123,7 @@ class Chat extends React.Component {
                                                         {el.payload.user.userName ? el.payload.user.userName : "undefined"}
                                                     </span>
                                                     : <img src={staticFileUrl + el.payload.fileHash} alt='image_url_api'
-                                                        style={{ 'max-width': '400px' }} />
+                                                        style={{ 'width': '300px' }} />
                                                     ({Math.floor(el.payload.fileSize / 1024)} KB)
                                                 </div>
                                             )
