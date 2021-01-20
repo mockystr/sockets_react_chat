@@ -9,7 +9,7 @@
     "download-file": "^0.1.5",
     "fetch-download": "^1.1.1",
     "glamor": "^2.20.40",
-    "immer": "^2.1.5",
+    "immer": "^8.0.1",
     "materialize-css": "^1.0.0",
     "mkdirp": "^0.5.1",
     "react": "^16.8.3",
